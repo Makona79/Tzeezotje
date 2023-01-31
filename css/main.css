@@ -1375,15 +1375,6 @@ input[type=text] {
   }
 }
 
-.map__wrapper {
-  position: relative;
-  background-image: url("../img/map.png");
-  background-position: center center;
-  background-size: cover;
-  cursor: pointer;
-  overflow: hidden;
-  border: 1px solid #d2d2d2;
-}
 .map__box {
   position: relative;
   width: 100%;
@@ -1393,6 +1384,11 @@ input[type=text] {
   padding: 0;
   z-index: 10;
   background-color: transparent;
+  background-image: url("../img/map.png");
+  background-position: center center;
+  background-size: cover;
+  overflow: hidden;
+  border: 1px solid #d2d2d2;
 }
 @media (max-width: 768px) {
   .map__box {
