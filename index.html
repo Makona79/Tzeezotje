@@ -87,6 +87,7 @@
   </div>
 </section>
 
+
       <section class="event">
   <div class="container">
     <div class="event__body">
@@ -138,13 +139,13 @@
         <div class="event__image event__image1">
           <picture>
             <source srcset="img/event/img1.webp" type="image/webp">
-            <img src="img/event/img1.jpg" width="323" height="486" alt="floor2">
+            <img loading="lazy" src="img/event/img1.jpg" width="323" height="486" alt="floor2">
           </picture>
         </div>
         <div class="event__image event__image2">
           <picture>
             <source srcset="img/event/img2.webp" type="image/webp">
-            <img src="img/event/img2.jpg" width="323" height="486" alt="floor2">
+            <img loading="lazy" src="img/event/img2.jpg" width="323" height="486" alt="floor2">
           </picture>
         </div>
       </div>
@@ -208,7 +209,7 @@
       <div class="food__image">
         <picture>
           <source srcset="img/food/image1.webp" type="image/webp">
-          <img src="img/food/image1.jpg" width="670" height="560" alt="LEKKER ETEN">
+          <img loading="lazy" src="img/food/image1.jpg" width="670" height="560" alt="LEKKER ETEN">
         </picture>
       </div>
     </div>
@@ -216,7 +217,7 @@
       <div class="food__image">
         <picture>
           <source srcset="img/food/image2.webp" type="image/webp">
-          <img src="img/food/image2.jpg" width="670" height="560" alt="LEKKER ETEN">
+          <img loading="lazy" src="img/food/image2.jpg" width="670" height="560" alt="LEKKER ETEN">
         </picture>
       </div>
       <div class="food__box">
@@ -234,8 +235,8 @@
       </div>
       <div class="food__image">
         <picture>
-          <source srcset="img/food/image3.webp" type="image/webp" >
-          <img src="img/food/image3.jpg" width="670" height="560" alt="LEKKER ETEN">
+          <source srcset="img/food/image3.webp" type="image/webp">
+          <img loading="lazy" src="img/food/image3.jpg" width="670" height="560" alt="LEKKER ETEN">
         </picture>
       </div>
     </div>
@@ -254,7 +255,7 @@
           <div class="slider-gallery__image">
             <picture>
               <source srcset="img/gallery/image1.webp" type="image/webp">
-              <img src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
+              <img loading="lazy" src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
             </picture>
           </div>
         </div>
@@ -262,7 +263,7 @@
           <div class="slider-gallery__image">
             <picture>
               <source srcset="img/gallery/image1.webp" type="image/webp">
-              <img src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
+              <img loading="lazy" src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
             </picture>
           </div>
         </div>
@@ -270,7 +271,7 @@
           <div class="slider-gallery__image">
             <picture>
               <source srcset="img/gallery/image1.webp" type="image/webp">
-              <img src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
+              <img loading="lazy" src="img/gallery/image1.jpg" width="970" height="646" alt="restarunt hall">
             </picture>
           </div>
         </div>
@@ -359,9 +360,10 @@
   </div>
 </section>
 
-      <div class="wrapper">
-  <div class="container">
-    <div class="map" id="map"></div>
+      <div class="map__wrapper">
+  <div class=" map__container container">
+    <div class="loader loader-default"></div>
+    <div class="map__box" id="map"></div>
   </div>
 </div>
 
@@ -424,7 +426,7 @@
 </div>
 
   </div>
-  <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш-API-ключ&lang=ru_RU"></script>
+
 </body>
 
 </html>

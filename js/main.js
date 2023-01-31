@@ -227,16 +227,24 @@ __webpack_require__.r(__webpack_exports__);
   \**********************************/
 /***/ (() => {
 
+// координаты центра на карте
 let center = [51.019430, 3.637189];
+//Функция создания карты сайта и затем вставки ее в блок
 function init() {
   let map = new ymaps.Map('map', {
     center: center,
     zoom: 10
   });
   let placemark = new ymaps.Placemark(center, {}, {
+    // Опции.
+    // Необходимо указать данный тип макета.
     iconLayout: 'default#image',
+    // Своё изображение иконки метки.
     iconImageHref: 'https://cdn-icons-png.flaticon.com/512/3944/3944427.png',
+    // Размеры метки.
     iconImageSize: [40, 40],
+    // Смещение левого верхнего угла иконки относительно
+    // её "ножки" (точки привязки).
     iconImageOffset: [-19, -44]
   });
   map.controls.remove('geolocationControl'); // удаляем геолокацию
@@ -248,9 +256,100 @@ function init() {
   map.controls.remove('rulerControl'); // удаляем контрол правил
   map.behaviors.disable(['scrollZoom']); // отключаем скролл карты (опционально)
 
-  map.geoObjects.add(placemark);
+  map.geoObjects.add(placemark); // помещаем флажок на карту
+
+  // Получаем первый экземпляр коллекции слоев, потом первый слой коллекции
+  var layer = map.layers.get(0).get(0);
+
+  // Решение по callback-у для определения полной загрузки карты
+  waitForTilesLoad(layer).then(function () {
+    // Скрываем индикатор загрузки после полной загрузки карты
+    spinner.classList.remove('is-active');
+  });
 }
-ymaps.ready(init);
+
+// Функция для определения полной загрузки карты (на самом деле проверяется загрузка тайлов)
+function waitForTilesLoad(layer) {
+  return new ymaps.vow.Promise(function (resolve, reject) {
+    let tc = getTileContainer(layer),
+      readyAll = true;
+    tc.tiles.each(function (tile, number) {
+      if (!tile.isReady()) {
+        readyAll = false;
+      }
+    });
+    if (readyAll) {
+      resolve();
+    } else {
+      tc.events.once("ready", function () {
+        resolve();
+      });
+    }
+  });
+}
+function getTileContainer(layer) {
+  for (var k in layer) {
+    if (layer.hasOwnProperty(k)) {
+      if (layer[k] instanceof ymaps.layer.tileContainer.CanvasContainer || layer[k] instanceof ymaps.layer.tileContainer.DomContainer) {
+        return layer[k];
+      }
+    }
+  }
+  return null;
+}
+// Функция загрузки API Яндекс.Карт по требованию (в нашем случае при наведении)
+function loadScript(url, callback) {
+  let script = document.createElement("script");
+  if (script.readyState) {
+    // IE
+    script.onreadystatechange = function () {
+      if (script.readyState == "loaded" || script.readyState == "complete") {
+        script.onreadystatechange = null;
+        callback();
+      }
+    };
+  } else {
+    // Другие браузеры
+    script.onload = function () {
+      callback();
+    };
+  }
+  script.src = url;
+  document.getElementsByTagName("head")[0].appendChild(script);
+}
+//Переменная для включения/отключения индикатора загрузки
+let spinner = document?.querySelector('.loader');
+console.log(spinner);
+let map_container = document.getElementById('map');
+
+// map_container.addEventListener('click', start_lazy_map);
+map_container.addEventListener('mouseenter', start_lazy_map);
+map_container.addEventListener('touchstart', start_lazy_map);
+map_container.addEventListener('touchmove', start_lazy_map);
+
+//Переменная для определения была ли хоть раз загружена Яндекс.Карта (чтобы избежать повторной загрузки при наведении)
+let check_if_load = false;
+// Основная функция, которая проверяет когда мы навели,кликнули  на блок
+function start_lazy_map() {
+  if (!check_if_load) {
+    // проверяем первый ли раз загружается Яндекс.Карта, если да, то загружаем
+    // Чтобы не было повторной загрузки карты, мы изменяем значение переменной
+    check_if_load = true;
+
+    // Показываем индикатор загрузки до тех пор, пока карта не загрузится
+    // spinner.addClass('is-active');
+    spinner.classList.add('is-active');
+
+    // Загружаем API Яндекс.Карт
+    loadScript("https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;loadByRequire=1", function () {
+      // Как только API Яндекс.Карт загрузились, сразу формируем карту и помещаем в блок с идентификатором map
+      ymaps.load(init);
+    });
+    console.log('YMAP LOADED');
+  }
+}
+
+// ymaps.ready(init);
 
 /***/ }),
 
@@ -603,6 +702,7 @@ const validateForms = (selector, rules, afterSend) => {
   }
   validation.onSuccess(event => {
     let formData = new FormData(event.target);
+    console.log(event.target);
     console.log(...formData);
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -617,6 +717,8 @@ const validateForms = (selector, rules, afterSend) => {
     };
     xhr.open('POST', form.action, true);
     xhr.send(formData);
+    console.log(form.action);
+    console.log(formData);
     event.target.reset();
   });
 };
