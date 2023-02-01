@@ -409,6 +409,9 @@ input[type=text] {
   height: 100vh;
   background-color: #d7d5d5;
   padding: 120px 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: hidden;
 }
 @media (max-width: 576px) {
   .hero {
@@ -771,6 +774,9 @@ input[type=text] {
 
 .service {
   background-color: #3a4574;
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: hidden;
 }
 
 .main-slider {
@@ -1377,6 +1383,9 @@ input[type=text] {
 
 .map__container {
   position: relative;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1200px;
 }
 .map__box {
   position: relative;
@@ -1478,12 +1487,15 @@ input[type=text] {
     opacity: 1;
   }
 }
-.gallery {
+.gallery__wrapper {
   position: relative;
   padding: 68px 0 101px 0;
   background-color: #fff;
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: hidden;
 }
-.gallery::after {
+.gallery__wrapper::after {
   content: "";
   position: absolute;
   top: 0;
